@@ -7,14 +7,14 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"k8s.io/client-go/kubernetes"
+	//"k8s.io/client-go/kubernetes"
 	//"k8s.io/client-go/tools/clientcmd"
 	// metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	// "k8s.io/client-go/kubernetes"
 )
 
 var (
-	kubeClient        *kubernetes.Clientset
+	//kubeClient        *kubernetes.Clientset
 	requestCounterVec = prometheus.NewCounterVec(
 		prometheus.CounterOpts{
 			Namespace: "test",
