@@ -47,7 +47,7 @@ func main() {
 	router.GET("/get", get200)
 	router.GET("/metrics", gin.WrapH(promhttp.HandlerFor(metricsRegistry, promhttp.HandlerOpts{ErrorHandling: promhttp.HTTPErrorOnError})))
 	//router.GET("/test", testKubeSecretes)
-	router.Run("0.0.0.0:8888")
+	router.Run(":8888")
 }
 
 func get200(c *gin.Context) {
