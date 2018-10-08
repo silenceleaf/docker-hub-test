@@ -5,16 +5,18 @@
 replicaCount: 1
 
 image:
-  repository: nginx
-  tag: stable
+  repository: silenceleaf/test
+  tag: latest
   pullPolicy: IfNotPresent
+  containerPort: 8888
 
 nameOverride: ""
 fullnameOverride: ""
 
 service:
-  type: ClusterIP
-  port: 80
+  type: NodePort
+  port: 8888
+  nodePort: 30002
 
 ingress:
   enabled: false
