@@ -22,4 +22,3 @@ spec:
           ports:
             - name: test-metrics-port
               containerPort: {{.Values.image.containerPort}}
-              protocol: TCP
