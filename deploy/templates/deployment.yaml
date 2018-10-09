@@ -1,12 +1,12 @@
 apiVersion: /api/v1
 kind: Deployment
 metadata:
-  name: {{ include "test-metrics.fullname" . }}
+  name: {{ .Release.Name }}
   labels:
-    app.kubernetes.io/name: {{ include "test-metrics.name" . }}
-    helm.sh/chart: {{ include "test-metrics.chart" . }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
-    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app: {{ .Release.Name }}
+    chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
@@ -16,8 +16,8 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: {{ include "test-metrics.name" . }}
-        app.kubernetes.io/instance: {{ .Release.Name }}
+        app: {{ .Release.Name }}
+        release: {{ .Release.Name }}
     spec:
       containers:
         - name: {{ .Chart.Name }}
@@ -27,17 +27,3 @@ spec:
             - name: test-metrics-port
               containerPort: {{.Values.image.containerPort}}
               protocol: TCP
-          resources:
-{{ toYaml .Values.resources | indent 12 }}
-    {{- with .Values.nodeSelector }}
-      nodeSelector:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.affinity }}
-      affinity:
-{{ toYaml . | indent 8 }}
-    {{- end }}
-    {{- with .Values.tolerations }}
-      tolerations:
-{{ toYaml . | indent 8 }}
-    {{- end }}
