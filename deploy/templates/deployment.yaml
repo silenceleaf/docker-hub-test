@@ -9,10 +9,6 @@ metadata:
     heritage: {{ .Release.Service }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: {{ include "test-metrics.name" . }}
-      app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
