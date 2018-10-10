@@ -3,10 +3,10 @@ kind: Service
 metadata:
   name: {{ .Release.Name }}
   annotations:
-    prometheus.io/scrape: true
+    prometheus.io/scrape: "true"
     prometheus.io/path: "/metrics"
     prometheus.io/scheme: http
-    prometheus.io/port: {{ .Values.service.port }}
+    prometheus.io/port: "{{ .Values.service.port }}"
   labels:
     app: {{ .Release.Name }}
     chart: {{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}
