@@ -2,7 +2,12 @@ package main
 
 import (
 	//"flag"
+	"crypto/md5"
+	"encoding/base64"
+	"fmt"
 	"net/http"
+	"os"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 	"github.com/prometheus/client_golang/prometheus"
@@ -50,10 +55,21 @@ func main() {
 	router.Run(":8888")
 }
 
+func hashAndTruncateLongName(input string, length int) string {
+	md5Data := md5.Sum([]byte(input))
+	base64Str := base64.StdEncoding.EncodeToString(md5Data[:md5.Size])
+	fmt.Printf("hash name: %s", base64Str)
+	return base64Str[:length]
+}
+
 func get200(c *gin.Context) {
 	defer c.Next()
 	requestCounterVec.WithLabelValues("test_api", "2xx").Inc()
-	c.JSON(http.StatusCreated, gin.H{"status": "OK!"})
+	c.JSON(http.StatusCreated,
+		gin.H{
+			"status":       "OK!",
+			"hashLongName": hashAndTruncateLongName("this is a very long name which need to be hashed", 13),
+			"env":          strings.Join(os.Environ(), "; ")})
 }
 
 // func testKubeSecretes(c *gin.Context) {
