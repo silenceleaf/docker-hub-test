@@ -67,12 +67,12 @@ func get200(c *gin.Context) {
 	requestCounterVec.WithLabelValues("test_api", "2xx").Inc()
 	json := gin.H{
 		"status":       "OK!",
-		"hashLongName": hashAndTruncateLongName("this is a very long name which need to be hashed", 13)
+		"hashLongName": hashAndTruncateLongName("this is a very long name which need to be hashed", 13),
 	}
 	for _, e := range os.Environ() {
-        pair := strings.Split(e, "=")
-        json[pair[0]] = pair[1]
-    }
+		pair := strings.Split(e, "=")
+		json[pair[0]] = pair[1]
+	}
 	c.JSON(http.StatusCreated, json)
 }
 
